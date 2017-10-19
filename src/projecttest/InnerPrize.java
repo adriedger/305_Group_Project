@@ -26,4 +26,21 @@ public class InnerPrize {
         this.motivation = motivation;
         this.affiliations = affiliations;
     }
+    
+    
+    @Override
+    public String toString() {
+       StringBuilder prize = new StringBuilder();
+       prize.append("\t").append("Year: ").append(year).append("\n");
+       prize.append("\t").append("Category: ").append(category).append("\n");
+       prize.append("\t").append("Share: ").append(share).append("\n");
+       prize.append("\t").append("Motivation: ").append(motivation).append("\n");
+       prize.append("\t").append("Affiliations: ").append("\n");
+       affiliations.forEach((p) -> {
+            prize.append(p);
+        });
+        prize.append("\n");
+       return prize.toString();
+    }
 }
+

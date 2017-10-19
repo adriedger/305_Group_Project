@@ -64,54 +64,14 @@ public final class CountryReader {
         return new Country(name, code);
     }
     
-    public void displayCountries() {
+    
+    @Override 
+    public String toString() {
+        StringBuilder countries = new StringBuilder();
         allCountries.forEach((c) -> {
-            System.out.println("Name: " + c.name);
-            System.out.println("Code: " + c.code);
-            System.out.println();
+            countries.append(c);
         });
-    }
-    
-    public List<Prize> readPrizeArray(JsonReader reader) throws IOException {
-        List<Prize> prizes = new ArrayList<>();
-        reader.beginObject();
-        reader.skipValue();
-        reader.beginArray();
-        while (reader.hasNext()) {
-            prizes.add(readPrize(reader));
-        }
-        reader.endArray();
-        reader.endObject();
-        return prizes;
-    }
-    
-        public Prize readPrize(JsonReader reader) throws IOException {
-        int year = 0;
-        String category = null;
-        List<Laureate> laureates = null;
-        reader.beginObject();
-        while (reader.hasNext()) {
-            String key = reader.nextName();
-            switch (key) {
-                case "year":
-                    year = reader.nextInt();
-                    break;
-                case "category":
-                    category = reader.nextString();
-                    break;
-                case "laureates":
-                //Need a nested function to make laureate list
-                /*
-                Function should be like readLaureateArray.
-                Likely need to remove the beginObject and skipValue.
-                Next readArray should work just like the javadoc example
-                 */
-                default:
-                    reader.skipValue();
-                    break;
-            }
-        }
-        reader.endObject();
-        return new Prize(year, category, laureates);
+        countries.append("\n");
+        return countries.toString();
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
  * @author Stephen Doyle (doyles8@mymacewan.ca)
  */
 public class Laureate {
+
     int id;
     String firstName;
     String surName;
@@ -28,7 +29,7 @@ public class Laureate {
 
     public Laureate(int id, String fn, String sn, String b, String d,
             String bc, String bcc, String bct, String dc,
-            String dcc, String dct,String g, List<InnerPrize> p) {
+            String dcc, String dct, String g, List<InnerPrize> p) {
         this.id = id;
         this.firstName = fn;
         this.surName = sn;
@@ -44,4 +45,27 @@ public class Laureate {
         this.prizes = p;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder laureate = new StringBuilder();
+        laureate.append("ID: ").append(id).append("\n");
+        laureate.append("FirsName: ").append(firstName).append("\n");
+        laureate.append("SurName: ").append(surName).append("\n");
+        laureate.append("Born: ").append(born).append("\n");
+        laureate.append("Died: ").append(died).append("\n");
+        laureate.append("BornCountry: ").append(bornCountry).append("\n");
+        laureate.append("BornCountryCode: ").append(bornCountryCode).append("\n");
+        laureate.append("BornCity: ").append(bornCity).append("\n");
+        laureate.append("DiedCountry: ").append(diedCountry).append("\n");
+        laureate.append("DiedCountryCode: ").append(diedCountryCode).append("\n");
+        laureate.append("DiedCity: ").append(diedCity).append("\n");
+        laureate.append("Gender: ").append(gender).append("\n");
+        laureate.append("Prizes: \n");
+        prizes.forEach((p) -> {
+            laureate.append(p);
+        });
+        laureate.append("\n");
+        return laureate.toString();
+
+    }
 }

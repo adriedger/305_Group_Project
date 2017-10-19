@@ -46,7 +46,7 @@ public final class PrizeReader {
     public Prize readPrize(JsonReader reader) throws IOException {
         int year = 0;
         String category = null;
-        List<Laureate> laureates = null;
+        List<InnerLaureate> laureates = null;
         reader.beginObject();
         while (reader.hasNext()) {
             String key = reader.nextName();
@@ -58,12 +58,8 @@ public final class PrizeReader {
                     category = reader.nextString();
                     break;
                 case "laureates":
-                //Need a nested function to make laureate list
-                /*
-                Function should be like readLaureateArray.
-                Likely need to remove the beginObject and skipValue.
-                Next readArray should work just like the javadoc example
-                 */
+                    laureates = InnerLaureateReader(reader);
+                    break;
                 default:
                     reader.skipValue();
                     break;
@@ -72,12 +68,61 @@ public final class PrizeReader {
         reader.endObject();
         return new Prize(year, category, laureates);
     }
-
-    public void displayPrizes() {
-        allPrizes.forEach((p) -> {
-            System.out.println("Year: " + p.year);
-            System.out.println("Category: " + p.category);
-            System.out.println();
-        });
+    
+      public List<InnerLaureate> InnerLaureateReader(JsonReader reader) throws IOException {
+        List<InnerLaureate> laureates = new ArrayList<>();
+        reader.beginArray();
+        while (reader.hasNext()) {
+            laureates.add(readLaureate(reader));
+        }
+        reader.endArray();
+        return laureates;
     }
+    
+    public InnerLaureate readLaureate(JsonReader reader) throws IOException {
+        int id = 0;
+        String firstName = null;
+        String surName = null;
+        String motivation = null;
+        int share =  0;
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String key = reader.nextName();
+            switch (key) {
+                case "id":
+                    id = reader.nextInt();
+                    break;
+                case "firstname":
+                    firstName = reader.nextString();
+                    break;
+                case "surname":
+                    surName = reader.nextString();
+                    break;                   
+                case "motivation":
+                    motivation = reader.nextString();
+                    break;
+                case "share":
+                    share = reader.nextInt();
+                    break; 
+                default:
+                    reader.skipValue();
+                    break;
+            }
+        }
+        reader.endObject();
+
+        return new InnerLaureate(id, firstName, surName, motivation, share);
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        StringBuilder prizes = new StringBuilder();
+        allPrizes.forEach((p) -> {
+            prizes.append(p);
+        });
+        return prizes.toString();
+    }
+
 }

@@ -6,6 +6,7 @@
 package projecttest;
 
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -98,42 +99,112 @@ public final class LaureateReader {
                     gender = reader.nextString();
                     break;
                 case "prizes":
-                    //InnerPrizeReader temp = new InnerPrizeReader(reader);
-                    //temp.prizes = prizes;
-                    //prizes = readPrizeArray(reader);
-                //Need a nested function to make prize list
-                /*
-                Function should be like readPrizeArray.
-                Likely need to remove the beginObject and skipValue.
-                Next readArray should work just like the javadoc example
-                 */
+                    prizes = InnerPrizeReader(reader);
+                    break;
                 default:
                     reader.skipValue();
                     break;
             }
         }
         reader.endObject();
-        return new Laureate(id,firstName,surName,born,died,bornCountry,
-                bornCountryCode,bornCity,diedCountry,diedCountryCode,
-                diedCity,gender,prizes);
-                
+        return new Laureate(id, firstName, surName, born, died, bornCountry,
+                bornCountryCode, bornCity, diedCountry, diedCountryCode,
+                diedCity, gender, prizes);
+
     }
 
-    public void displayLaureates() {
+    @Override
+    public String toString() {
+        StringBuilder laureates = new StringBuilder();
         allLaureates.forEach((l) -> {
-            System.out.println("ID: " + l.id);
-            System.out.println("FirstName: " + l.firstName);
-            System.out.println("SurName: " + l.surName);
-            System.out.println("Born: " + l.born);
-            System.out.println("Died: " + l.died);
-            System.out.println("BornCountry: " + l.bornCountry);
-            System.out.println("BornCountryCode: " + l.bornCountryCode);
-            System.out.println("BornCity: " + l.bornCity);
-            System.out.println("DiedCountry: " + l.diedCountry);
-            System.out.println("DiedCountryCode: " + l.diedCountryCode);
-            System.out.println("DiedCity: " + l.diedCity);
-            System.out.println("Gender: " + l.gender);
-            System.out.println();
+            laureates.append(l);
         });
+        return laureates.toString();
+    }
+
+    public List<InnerPrize> InnerPrizeReader(JsonReader reader) throws IOException {
+        List<InnerPrize> prizes = new ArrayList<>();
+        reader.beginArray();
+        while (reader.hasNext()) {
+            prizes.add(readPrize(reader));
+        }
+        reader.endArray();
+        return prizes;
+    }
+
+    public InnerPrize readPrize(JsonReader reader) throws IOException {
+        int year = 0;
+        String category = null;
+        int share = 0;
+        String motivation = null;
+        List<Affiliations> affiliations = null;
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String key = reader.nextName();
+            switch (key) {
+                case "year":
+                    year = reader.nextInt();
+                    break;
+                case "category":
+                    category = reader.nextString();
+                    break;
+                case "share":
+                    share = reader.nextInt();
+                    break;
+                case "motivation":
+                    motivation = reader.nextString();
+                    break;
+                case "affiliations":
+                    affiliations = InnerAffiliationsReader(reader);
+                    break;
+                default:
+                    reader.skipValue();
+                    break;
+            }
+        }
+        reader.endObject();
+        //System.out.println(reader.peek());
+        return new InnerPrize(year, category, share, motivation, affiliations);
+    }
+
+    public List<Affiliations> InnerAffiliationsReader(JsonReader reader) throws IOException {
+        List<Affiliations> affiliations = new ArrayList<>();
+        reader.beginArray();
+        while (reader.hasNext()) {
+            affiliations.add(readAffiliations(reader));
+        }
+        reader.endArray();
+        return affiliations;
+    }
+
+    public Affiliations readAffiliations(JsonReader reader) throws IOException {
+        String name = null;
+        String city = null;
+        String country = null;
+        if (reader.peek() == JsonToken.BEGIN_ARRAY) {
+            reader.beginArray();        
+            reader.endArray();
+        } else {
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String key = reader.nextName();
+            switch (key) {
+                case "name":
+                    name = reader.nextString();
+                    break;
+                case "city":
+                    city = reader.nextString();
+                    break;
+                case "country":
+                    country = reader.nextString();
+                    break;
+                default:
+                    reader.skipValue();
+                    break;
+            }
+        }
+        reader.endObject();
+        }
+        return new Affiliations(name, city, country);
     }
 }

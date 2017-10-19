@@ -14,11 +14,25 @@ import java.util.List;
 public class Prize {
     int year;
     String category;
-    List<Laureate> laureates;
+    List<InnerLaureate> laureates;
     
-    public Prize(int year, String category, List<Laureate> laureates) {
+    public Prize(int year, String category, List<InnerLaureate> laureates) {
         this.year = year;
         this.category = category;
         this.laureates = laureates;
+    }
+    
+    @Override 
+    public String toString() {
+        StringBuilder prize = new StringBuilder();
+        prize.append("Year: ").append(year).append("\n");
+        prize.append("Category: ").append(category).append("\n");
+        prize.append("Laureates: \n");
+        laureates.forEach((l) -> {
+            prize.append(l);
+        });
+        prize.append("\n");
+        
+        return prize.toString();
     }
 }

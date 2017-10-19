@@ -17,14 +17,14 @@ public class ProjectTest {
      * @throws java.lang.Exception
      */
     public static void main(String[] ignored) throws Exception {
-        InputStream input = new URL("http://api.nobelprize.org/v1/country.json").openStream();
-        CountryReader countries = new CountryReader(input);
-        countries.displayCountries();
-        input = new URL("http://api.nobelprize.org/v1/prize.json?").openStream();
-        PrizeReader prizes = new PrizeReader(input);
-        prizes.displayPrizes();
-        input = new URL("http://api.nobelprize.org/v1/laureate.json?").openStream();
-        LaureateReader laureates = new LaureateReader(input);
-        laureates.displayLaureates();
+        //InputStream input1 = new URL("http://api.nobelprize.org/v1/country.json").openStream();
+        //CountryReader countries = new CountryReader(input1);
+        //System.out.println(countries);
+        //InputStream input2 = new URL("http://api.nobelprize.org/v1/prize.json?").openStream();
+        //PrizeReader prizes = new PrizeReader(input2);
+        //System.out.println(prizes);
+        InputStream input3 = new URL("http://api.nobelprize.org/v1/laureate.json?").openStream();
+        LaureateReader laureates = new LaureateReader(input3);
+        System.out.println(laureates);
     }
 }

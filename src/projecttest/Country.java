@@ -17,5 +17,15 @@ public class Country {
         this.name = name;
         this.code = code;
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder country = new StringBuilder();
+        country.append("Name: ").append(name).append("\n");
+        country.append("Code: ").append(code).append("\n");
+        country.append("\n");
+        
+        return country.toString();
+    }
 
 }

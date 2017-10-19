@@ -19,4 +19,14 @@ public class Affiliations {
         this.city = city;
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder affiliations = new StringBuilder();
+        affiliations.append("\t\t").append("Name: ").append(name).append("\n");
+        affiliations.append("\t\t").append("City: ").append(city).append("\n");
+        affiliations.append("\t\t").append("Country: ").append(country).append("\n");
+        affiliations.append("\n");
+        return affiliations.toString();
+    }
 }
