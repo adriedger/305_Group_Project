@@ -23,3 +23,15 @@ hs_err_pid*
 
 Postal_Service/build/
 Postal_Service/nbproject/private/
+.DS_Store
+build.xml
+build/classes/.netbeans_automatic_build
+build/classes/.netbeans_update_resources
+manifest.mf
+nbproject/build-impl.xml
+nbproject/genfiles.properties
+nbproject/private/config.properties
+nbproject/private/private.properties
+nbproject/private/private.xml
+nbproject/project.properties
+nbproject/project.xml
