@@ -6,6 +6,8 @@
  */
 package projecttest;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -30,5 +32,9 @@ public class ProjectTest {
         InputStream input3 = new URL("http://api.nobelprize.org/v1/laureate.json?").openStream();
         LaureateReader laureates = new LaureateReader(input3);
         //System.out.println(laureates);
+        File datadump = new File("nobel.txt"); 
+        InputStream input4 = new FileInputStream(datadump);
+        DataDumpReader dumps  = new DataDumpReader(input4);
+        //System.out.println(dumps);
     }
 }
