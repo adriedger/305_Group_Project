@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * CMPT 305 - Main Project
+ * Stephen Doyle - 1718939
+ * 
+ * Program to implement a user interface for the nobel prize database.
  */
 package projecttest;
 
@@ -13,23 +14,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * CountryReader - parses an input stream in JSON format and creates a list of
+ * country objects from the data. Contains a list of Country objects
  *
  * @author Stephen Doyle (doyles8@mymacewan.ca)
  */
 public final class CountryReader {
+
     private final List<Country> allCountries;
-    
+
+    /**
+     * CountryReader - class constructor to create new CountryReader object.
+     * Constructor uses nested functions to complete the data parse and create
+     * the list when it is called
+     *
+     * @param in - input stream containing the JSON information
+     * @throws IOException
+     */
     public CountryReader(InputStream in) throws IOException {
         this.allCountries = readJsonStream(in);
     }
-    
-    public List<Country> readJsonStream(InputStream in) throws IOException {
+
+    /**
+     * readJsonStream - creates a JSON reader (using GSON library)
+     *
+     * @param in - input stream containing the JSON information
+     * @return - a call to the readCountryArray function
+     * @throws IOException
+     */
+    private List<Country> readJsonStream(InputStream in) throws IOException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"))) {
             return readCountryArray(reader);
         }
     }
 
-    public List<Country> readCountryArray(JsonReader reader) throws IOException {
+    /**
+     * readCountryArray - creates a list of Country objects
+     *
+     * @param reader - JSON reader pointed at the input stream containing JSON
+     * information
+     * @return - List of country objects
+     * @throws IOException
+     */
+    private List<Country> readCountryArray(JsonReader reader) throws IOException {
         List<Country> countries = new ArrayList<>();
         reader.beginObject();
         reader.skipValue();
@@ -42,7 +69,15 @@ public final class CountryReader {
         return countries;
     }
 
-    public Country readCountry(JsonReader reader) throws IOException {
+    /**
+     * readCountry - creates a single Country object
+     *
+     * @param reader - JSON reader pointed at the input stream containing JSON
+     * information
+     * @return - Newly created Country object
+     * @throws IOException
+     */
+    private Country readCountry(JsonReader reader) throws IOException {
         String name = null;
         String code = null;
         reader.beginObject();
@@ -63,9 +98,13 @@ public final class CountryReader {
         reader.endObject();
         return new Country(name, code);
     }
-    
-    
-    @Override 
+
+    /**
+     * toString - override of the default toString method.
+     *
+     * @return - List of Country objects in an organized format
+     */
+    @Override
     public String toString() {
         StringBuilder countries = new StringBuilder();
         allCountries.forEach((c) -> {

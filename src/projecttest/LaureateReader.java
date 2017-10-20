@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * CMPT 305 - Main Project
+ * Stephen Doyle - 1718939
+ * 
+ * Program to implement a user interface for the nobel prize database.
  */
 package projecttest;
 
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * LaureateReader - parses an input stream in JSON format and creates a list of
+ * laureate objects from the data. Contains a list of laureate objects
  *
  * @author Stephen Doyle (doyles8@mymacewan.ca)
  */
@@ -21,17 +24,40 @@ public final class LaureateReader {
 
     private final List<Laureate> allLaureates;
 
+    /**
+     * LaureateReader - class constructor to create new LaureateReader object.
+     * Constructor uses nested functions to complete the data parse and create
+     * the list when it is called
+     *
+     * @param in - input stream containing the JSON information
+     * @throws IOException
+     */
     public LaureateReader(InputStream in) throws IOException {
         this.allLaureates = readJsonStream(in);
     }
 
-    public List<Laureate> readJsonStream(InputStream in) throws IOException {
+    /**
+     * readJsonStream - creates a JSON reader (using GSON library)
+     *
+     * @param in - input stream containing the JSON information
+     * @return - a call to the readLaureateArray function
+     * @throws IOException
+     */
+    private List<Laureate> readJsonStream(InputStream in) throws IOException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"))) {
             return readLaureateArray(reader);
         }
     }
 
-    public List<Laureate> readLaureateArray(JsonReader reader) throws IOException {
+    /**
+     * readLaureateArray - creates a list of Laureate objects
+     *
+     * @param reader - JSON reader pointed at the input stream containing JSON
+     * information
+     * @return - List of laureate objects
+     * @throws IOException
+     */
+    private List<Laureate> readLaureateArray(JsonReader reader) throws IOException {
         List<Laureate> laureates = new ArrayList<>();
         reader.beginObject();
         reader.skipValue();
@@ -44,7 +70,15 @@ public final class LaureateReader {
         return laureates;
     }
 
-    public Laureate readLaureate(JsonReader reader) throws IOException {
+    /**
+     * readLaureate - creates a single Country object
+     *
+     * @param reader - JSON reader pointed at the input stream containing JSON
+     * information
+     * @return - Newly created Laureate object
+     * @throws IOException
+     */
+    private Laureate readLaureate(JsonReader reader) throws IOException {
         int id = 0;
         String firstName = null;
         String surName = null;
@@ -113,6 +147,11 @@ public final class LaureateReader {
 
     }
 
+    /**
+     * toString - override of the default toString method.
+     *
+     * @return - List of Country objects in an organized format
+     */
     @Override
     public String toString() {
         StringBuilder laureates = new StringBuilder();
@@ -122,7 +161,17 @@ public final class LaureateReader {
         return laureates.toString();
     }
 
-    public List<InnerPrize> InnerPrizeReader(JsonReader reader) throws IOException {
+    /**
+     * InnerPrizeReader - creates a list of InnerPrize objects from the JSON
+     * information. InnerPrizes are the nested objects stored inside the
+     * laureate JSON items
+     *
+     * @param reader - JSON reader pointed at the input stream containing the
+     * JSON information
+     * @return - list InnerPrize objects
+     * @throws IOException
+     */
+    private List<InnerPrize> InnerPrizeReader(JsonReader reader) throws IOException {
         List<InnerPrize> prizes = new ArrayList<>();
         reader.beginArray();
         while (reader.hasNext()) {
@@ -132,7 +181,15 @@ public final class LaureateReader {
         return prizes;
     }
 
-    public InnerPrize readPrize(JsonReader reader) throws IOException {
+    /**
+     * readPrize - creates an InnerPrize object from the JSON information.
+     *
+     * @param reader - JSON reader pointed at the input stream containing the
+     * JSON information.
+     * @return - new InnerPrize object
+     * @throws IOException
+     */
+    private InnerPrize readPrize(JsonReader reader) throws IOException {
         int year = 0;
         String category = null;
         int share = 0;
@@ -167,7 +224,17 @@ public final class LaureateReader {
         return new InnerPrize(year, category, share, motivation, affiliations);
     }
 
-    public List<Affiliations> InnerAffiliationsReader(JsonReader reader) throws IOException {
+    /**
+     * InnerAffiliatoinsReader - creates a list of Affiliations objects.
+     * Affiliations are nested JSON items inside the prize information which is
+     * nested inside the Laureate item. (Laureate -> Prize - > Affiliation)
+     *
+     * @param reader - JSON reader pointed to the input stream containing the
+     * JSON information
+     * @return - list of affiliations objects
+     * @throws IOException
+     */
+    private List<Affiliations> InnerAffiliationsReader(JsonReader reader) throws IOException {
         List<Affiliations> affiliations = new ArrayList<>();
         reader.beginArray();
         while (reader.hasNext()) {
@@ -177,33 +244,43 @@ public final class LaureateReader {
         return affiliations;
     }
 
-    public Affiliations readAffiliations(JsonReader reader) throws IOException {
+    /**
+     * readAffiliations - creates an Affiliations object from the JSON
+     * information.
+     *
+     * @param reader - JSON reader pointed towards the input stream containing
+     * JSON information.
+     *
+     * @return - new affiliations objects
+     * @throws IOException
+     */
+    private Affiliations readAffiliations(JsonReader reader) throws IOException {
         String name = null;
         String city = null;
         String country = null;
         if (reader.peek() == JsonToken.BEGIN_ARRAY) {
-            reader.beginArray();        
+            reader.beginArray();
             reader.endArray();
         } else {
-        reader.beginObject();
-        while (reader.hasNext()) {
-            String key = reader.nextName();
-            switch (key) {
-                case "name":
-                    name = reader.nextString();
-                    break;
-                case "city":
-                    city = reader.nextString();
-                    break;
-                case "country":
-                    country = reader.nextString();
-                    break;
-                default:
-                    reader.skipValue();
-                    break;
+            reader.beginObject();
+            while (reader.hasNext()) {
+                String key = reader.nextName();
+                switch (key) {
+                    case "name":
+                        name = reader.nextString();
+                        break;
+                    case "city":
+                        city = reader.nextString();
+                        break;
+                    case "country":
+                        country = reader.nextString();
+                        break;
+                    default:
+                        reader.skipValue();
+                        break;
+                }
             }
-        }
-        reader.endObject();
+            reader.endObject();
         }
         return new Affiliations(name, city, country);
     }

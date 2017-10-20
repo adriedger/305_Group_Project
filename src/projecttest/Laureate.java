@@ -1,13 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * CMPT 305 - Main Project
+ * Stephen Doyle - 1718939
+ * 
+ * Program to implement a user interface for the nobel prize database.
  */
 package projecttest;
 
 import java.util.List;
 
 /**
+ * Laureate Class - contains the laureate information contained inside a
+ * laureate JSON item. Contains id, firstname, surname, born, died, born
+ * country, born country code, born city, died country, died country code, died
+ * city, gender, and a list of InnerPrize objects. NOTE: These values can be
+ * NULL.
  *
  * @author Stephen Doyle (doyles8@mymacewan.ca)
  */
@@ -27,6 +33,23 @@ public class Laureate {
     String gender;
     List<InnerPrize> prizes;
 
+    /**
+     * Laureate - class constructor to make new laureate object
+     *
+     * @param id - laureates id
+     * @param fn - laureates first name
+     * @param sn - laureates last name
+     * @param b - laureates birth date
+     * @param d - laureates date of death
+     * @param bc - laureates birth country
+     * @param bcc - laureates birth country code
+     * @param bct - laureates birth city
+     * @param dc - laureates death country
+     * @param dcc - laureates death country code
+     * @param dct - laureates death city
+     * @param g - laureates gender
+     * @param p - list of prizes laureate has won
+     */
     public Laureate(int id, String fn, String sn, String b, String d,
             String bc, String bcc, String bct, String dc,
             String dcc, String dct, String g, List<InnerPrize> p) {
@@ -45,6 +68,11 @@ public class Laureate {
         this.prizes = p;
     }
 
+    /**
+     * toString - override of the default toString method.
+     *
+     * @return - Laureate object in an organized format
+     */
     @Override
     public String toString() {
         StringBuilder laureate = new StringBuilder();
