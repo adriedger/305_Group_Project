@@ -13,7 +13,8 @@ public class Information_Exploration {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ReadNobel process = new ReadNobel();
+        process.read();
     }
     
 }
