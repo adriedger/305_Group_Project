@@ -29,11 +29,13 @@ public class ReadNobel {
     public List<Laureate> read(){
         try{
             Scanner input = new Scanner(text);
+            Laureate current = new Laureate();
             while(input.hasNextLine()){
                 String line = input.nextLine();
                 if(line.equals("")){
-                    
-                    System.out.println("");                    
+                    laureates.add(current);
+                    current = new Laureate();
+//                    System.out.println("");                    
                 }
                 else{
                     String[] tokenizer = line.split(" ");
@@ -42,8 +44,8 @@ public class ReadNobel {
                     for(int i = 1; i < tokenizer.length; i++){
                         data += tokenizer[i] + " ";
                     }
-
-                    System.out.println(key+": "+data);
+                    current.addEntry(key, data);
+//                    System.out.println(key+": "+data);
                 }
             }
                 

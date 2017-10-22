@@ -3,9 +3,11 @@
  */
 package information_exploration;
 
+import java.util.List;
+
 /**
  *
- * @author
+ * @author adriedger
  */
 public class Information_Exploration {
 
@@ -14,7 +16,10 @@ public class Information_Exploration {
      */
     public static void main(String[] args) {
         ReadNobel process = new ReadNobel();
-        process.read();
+        List<Laureate> laureates = process.read();
+        for(Laureate l : laureates)
+            l.output();
+        
     }
     
 }
