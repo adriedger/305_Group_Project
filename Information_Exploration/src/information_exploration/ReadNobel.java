@@ -3,13 +3,14 @@
  */
 package information_exploration;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-
 
 /**
  *
@@ -17,41 +18,35 @@ import java.util.Scanner;
  */
 public class ReadNobel {
     
-    private File text;
+    private URL stockURL;
     private List<Laureate> laureates;
     
-    public ReadNobel(){
-        text = new File("nobel.txt");
+    public ReadNobel() throws MalformedURLException{
+        stockURL = new URL("http://api.nobelprize.org/v1/laureate.csv");
         laureates = new ArrayList<>();
         
     }
     
-    public List<Laureate> read(){
-        try{
-            Scanner input = new Scanner(text);
-            Laureate current = new Laureate();
-            while(input.hasNextLine()){
-                String line = input.nextLine();
-                if(line.equals("")){
-                    laureates.add(current);
-                    current = new Laureate();
-//                    System.out.println("");                    
-                }
-                else{
-                    String[] tokenizer = line.split(" ");
-                    String key = tokenizer[0].replace(":", "");
-                    String data = "";
-                    for(int i = 1; i < tokenizer.length; i++){
-                        data += tokenizer[i] + " ";
-                    }
-                    current.addEntry(key, data);
-//                    System.out.println(key+": "+data);
-                }
-            }
-                
-        }
-        catch(IOException ex){
-            System.out.println ("Couldn't find 'nobel.txt'");
+    public List<Laureate> read() throws MalformedURLException, IOException, Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+        List<String> parsed = new ArrayList<>(); 
+        CSVHelper helper = new CSVHelper();
+        parsed = helper.parseLine(in);
+       while(parsed != null){  
+            Laureate laureate = new Laureate();
+
+            laureate.addEntry("year", parsed.get(12));
+            laureate.addEntry("prize", parsed.get(13));
+            laureate.addEntry("name", parsed.get(1) + " " + parsed.get(2));
+            laureate.addEntry("gender",  parsed.get(11));
+            laureate.addEntry("photo", null);
+            laureate.addEntry("country", parsed.get(5));
+            laureate.addEntry("affiliation", parsed.get(17) + ", " + parsed.get(18) + ", " + parsed.get(19));
+            laureate.addEntry("birthyear", parsed.get(3));
+            laureate.addEntry("lecture", null);
+            
+            laureates.add(laureate);
+            parsed = helper.parseLine(in);
         }
         return laureates;
     }
