@@ -21,18 +21,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-<<<<<<< HEAD
-Postal_Service/build/
-Postal_Service/nbproject/private/
-/Information_Exploration/nbproject/private/
-build.xml
-.DS_Store
-build/classes/.netbeans_automatic_build
-build/classes/.netbeans_update_resources
-*.mf
-*.xml
-*.properties
-=======
 /Information_Exploration/nbproject/private/
 /Information_Exploration/build/
->>>>>>> origin/ScannerRead
+/Information_Exploration/dist/
