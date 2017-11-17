@@ -18,7 +18,12 @@ public class Information_Exploration {
     public static void main(String[] args) throws MalformedURLException, Exception {
         ReadNobel process = new ReadNobel();
         List<Laureate> laureates = process.read();
-        for(Laureate l : laureates)
-            l.output(); 
+        //for(Laureate l : laureates)
+            //l.output();
+            
+        laureates = process.basicSearch("year", "1950");
+        for (Laureate l : laureates)
+            l.output();
+        
     }
 }

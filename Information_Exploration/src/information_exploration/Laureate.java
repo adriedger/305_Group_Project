@@ -16,7 +16,11 @@ public class Laureate {
     
     public void addEntry(String key, String data){
         entries.put(key, data);        
-    }    
+    }
+
+    public Map getEntry() {
+        return entries;
+    }
     
     public void output(){
         for(Map.Entry<String, String> entry : entries.entrySet()){
@@ -24,4 +28,5 @@ public class Laureate {
         }
         System.out.println("");
     }    
+
 }
