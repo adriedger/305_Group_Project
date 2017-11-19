@@ -12,6 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
@@ -20,22 +22,33 @@ import javafx.scene.control.Label;
  * @author tahmi
  */
 public class FXMLDocumentController implements Initializable {
-    //Category
-    @FXML
-    private ComboBox<String> category;
+    
+    public Button search;
+    
+    /**
+     *for the search button it will should use the search text to run the search
+     */
+    public void handleButtonSearch(){
+        System.out.println("search clicked");
+    }
+    
     
     @FXML
     private Label label;
     
     @FXML
-    private void ButtonAction(ActionEvent event){
-        label.setText("Selected: "+ category.getValue());
+    private ComboBox categoryBox;
+    ObservableList<String> categoryList = FXCollections.observableArrayList("Name","Prize","Gender","Year","Country");
+    
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+        System.out.println("You clicked me!");
+        label.setText("Hello World!");
     }
-    ObservableList<String> List = FXCollections.observableArrayList("Year","Prize","Name","Country","Gender");
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        categoryBox.setItems(categoryList);
     }    
     
 }

@@ -5,21 +5,30 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" focusTraversable="true" prefHeight="569.0" prefWidth="688.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkginterface.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkginterface.FXMLDocumentController">
    <children>
-      <TextField layoutX="123.0" layoutY="14.0" prefHeight="32.0" prefWidth="423.0" promptText="Enter Text Here" AnchorPane.bottomAnchor="537.0" AnchorPane.leftAnchor="123.0" AnchorPane.topAnchor="0.0" />
-      <ComboBox fx:id="category" layoutX="66.0" layoutY="107.0" prefHeight="32.0" prefWidth="122.0" promptText="Category" AnchorPane.bottomAnchor="537.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="566.0" AnchorPane.topAnchor="0.0" />
-      <Button layoutX="546.0" mnemonicParsing="false" onAction="#ButtonAction" prefHeight="32.0" prefWidth="135.0" text="Search" AnchorPane.bottomAnchor="537.0" AnchorPane.topAnchor="0.0" />
-      <TabPane layoutY="32.0" prefHeight="527.0" prefWidth="679.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="1.0" layoutY="42.0" prefHeight="504.0" prefWidth="674.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
         <tabs>
-          <Tab fx:id="label" text="PlaceHolder">
-               <content>
-                  <Label fx:id="label" prefHeight="69.0" prefWidth="170.0" text="Label" />
-               </content></Tab>
+          <Tab closable="false" text="Home">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="414.0" prefWidth="705.0">
+                     <children>
+                        <Label layoutX="94.0" layoutY="15.0" prefHeight="31.0" prefWidth="160.0" scaleX="2.0" scaleY="2.0" text="Step1: Choose a Category" AnchorPane.bottomAnchor="409.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="451.0" AnchorPane.topAnchor="15.0" />
+                        <Label layoutX="126.0" layoutY="102.0" prefHeight="31.0" prefWidth="224.0" scaleX="2.0" scaleY="2.0" text="Step2: Input the desired search" AnchorPane.leftAnchor="126.0" />
+                        <Label layoutX="99.0" layoutY="176.0" prefHeight="55.0" prefWidth="169.0" scaleX="2.0" scaleY="2.0" text="Step3: Click search" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
+      <Button fx:id="search" layoutX="578.0" mnemonicParsing="false" onAction="#handleButtonSearch" prefHeight="31.0" prefWidth="96.0" text="Search" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="609.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ComboBox fx:id="categoryBox" layoutY="1.0" prefWidth="150.0" promptText="Category" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="555.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
