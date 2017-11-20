@@ -12,7 +12,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * youtube javafx opening and closing tabs
+ * need to figure out how to change search bars
+ * figure out how to grab the variable from the dropdown and the textbox
  * @author tahmi
  */
 public class Interface extends Application {
@@ -23,6 +25,7 @@ public class Interface extends Application {
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Information Exploration");
         stage.show();
     }
 
