@@ -25,24 +25,25 @@ import javafx.scene.layout.AnchorPane;
  * @author tahmi
  */
 public class FXMLDocumentController implements Initializable {
-    
     public Button search;
-    
+    String category;
     /**
      *for the search button it will should use the search text to run the search
      */
     @FXML
     public void handleButtonSearch(){
-        System.out.println("search clicked");
+        System.out.println("search clicked and the category is: "+ category);
        
     }
     
     @FXML
-    public String categoryChosen(){
-        String category = categoryBox.getSelectionModel().getSelectedItem().toString();
+    public void categoryChosen(){
+        //gets the category
+        String cat = categoryBox.getSelectionModel().getSelectedItem().toString();
         System.out.println(category);
-        return category;
+        category = cat;
     }
+    
     @FXML
     private TabPane tabPane;
     
