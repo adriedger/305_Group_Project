@@ -40,8 +40,9 @@ public class FXMLDocumentController implements Initializable {
     public void categoryChosen(){
         //gets the category
         String cat = categoryBox.getSelectionModel().getSelectedItem().toString();
-        System.out.println(category);
+        //System.out.println(category);
         category = cat;
+        System.out.println(category);
     }
     
     @FXML
@@ -50,7 +51,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private ComboBox categoryBox;
-    ObservableList<String> categoryList = FXCollections.observableArrayList("Name","Prize","Gender","Year","Country");
+    ObservableList<String> categoryList = FXCollections.observableArrayList("General","Name","Prize","Gender","Year","Country");
     
     @FXML
     private void loadTab(ActionEvent Event) throws IOException{
