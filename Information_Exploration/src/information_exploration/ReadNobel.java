@@ -49,15 +49,4 @@ public class ReadNobel {
         }
         return laureates;
     }
-    
-    public List<Laureate> basicSearch(String key, String val) {
-        List<Laureate> newList = new ArrayList<>();
-        
-        laureates.forEach((Laureate l) -> {
-                if (l.getEntry().get(key).equals(val)) {
-                    newList.add(l);
-                }
-        });   
-        return newList;
-    }
 }

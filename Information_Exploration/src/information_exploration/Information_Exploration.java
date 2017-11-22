@@ -28,11 +28,13 @@ public class Information_Exploration {
         
         Command nextC = new CategorySearch(laureates, "prize", "physics");
         undoManager.addCommand(nextC);
-        laureates = nextC.execute();
+        laureates = nextC.execute();       
+        
+        for (Laureate l : laureates)
+            l.output();
         
         laureates = undoManager.undoCommand();
-        
-        //laureates = process.basicSearch("year", "1950");
+
         for (Laureate l : laureates)
             l.output();
         
