@@ -33,7 +33,8 @@ public class ReadNobel {
         parsed = helper.parseLine(in);
        while(parsed != null){  
             Laureate laureate = new Laureate();
-
+            
+            laureate.addEntry("id", parsed.get(0));
             laureate.addEntry("year", parsed.get(12));
             laureate.addEntry("prize", parsed.get(13));
             laureate.addEntry("name", parsed.get(1) + " " + parsed.get(2));
@@ -42,6 +43,7 @@ public class ReadNobel {
             laureate.addEntry("country", parsed.get(5));
             laureate.addEntry("affiliation", parsed.get(17) + ", " + parsed.get(18) + ", " + parsed.get(19));
             laureate.addEntry("birthyear", parsed.get(3));
+            laureate.addEntry("deathyear", parsed.get(4));
             laureate.addEntry("biography", "http://nobelprize.org/"+parsed.get(13)+"/laureates/"+parsed.get(12)+"/"+parsed.get(2).toLowerCase()+"-bio.html");
             
             laureates.add(laureate);

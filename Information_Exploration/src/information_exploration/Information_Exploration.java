@@ -20,23 +20,22 @@ public class Information_Exploration {
         ReadNobel process = new ReadNobel();
         List<Laureate> laureates = process.read();
         //for(Laureate l : laureates)
-            //l.output();
+           //l.output();
         
-        Command newC = new CategorySearch(laureates, "year", "1950");  
+        /*
+        Command newC = new GeneralSearch(laureates, "1929");  
         undoManager.addCommand(newC);
         laureates = newC.execute();
-        
-        Command nextC = new CategorySearch(laureates, "prize", "physics");
-        undoManager.addCommand(nextC);
-        laureates = nextC.execute();       
+        */
+        Command newC = new CategorySearch(laureates, "country", "canada");  
+        undoManager.addCommand(newC);
+        laureates = newC.execute();
+       
         
         for (Laureate l : laureates)
             l.output();
         
-        laureates = undoManager.undoCommand();
 
-        for (Laureate l : laureates)
-            l.output();
         
     }
 }
