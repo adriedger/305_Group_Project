@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * youtube javafx opening and closing tabs
  * need to figure out how to change search bars
  * figure out how to grab the variable from the dropdown and the textbox
  * @author tahmi

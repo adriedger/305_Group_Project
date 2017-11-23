@@ -5,19 +5,17 @@
  */
 package pkginterface;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -25,17 +23,36 @@ import javafx.scene.layout.AnchorPane;
  * @author tahmi
  */
 public class FXMLDocumentController implements Initializable {
+    String category,textSearch;
+    ArrayList<String> array = new ArrayList<>();
+    
     public Button search;
-    String category;
+    public Button back;
+    @FXML
+    private AnchorPane rootPane;
+    
     /**
      *for the search button it will should use the search text to run the search
      */
     @FXML
     public void handleButtonSearch(){
+        textSearch = searchText.getText();
         System.out.println("search clicked and the category is: "+ category);
+        System.out.println(textSearch+ " is being searched");
+        getHistory();
        
     }
     
+    @FXML
+    public void handleBackButton(){
+        if (!array.isEmpty()){
+            array.remove((array.size())-1);
+            history.setText(array.toString());
+        }
+    }
+    /**
+     * determines what category is chosen
+     */
     @FXML
     public void categoryChosen(){
         //gets the category
@@ -45,23 +62,29 @@ public class FXMLDocumentController implements Initializable {
         System.out.println(category);
     }
     
+    public void getHistory(){
+        //ArrayList<String> array = new ArrayList<>();
+        array.add(category+": "+textSearch);
+        history.setText(array.toString());
+    }
+    //@FXML
+    //private AutoCompleteTextField autoSearch;
+    
     @FXML
-    private TabPane tabPane;
+    private Label history;
     
-    
+    @FXML
+    private TextField searchText;
+   
     @FXML
     private ComboBox categoryBox;
     ObservableList<String> categoryList = FXCollections.observableArrayList("General","Name","Prize","Gender","Year","Country");
     
-    @FXML
-    private void loadTab(ActionEvent Event) throws IOException{
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("forTabs.fxml"));
-        
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         categoryBox.setItems(categoryList);
+        
+                
         
     }    
     
