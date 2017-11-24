@@ -50,6 +50,10 @@ public class UndoManager {
         }
     }
     
+    public boolean canReset() {
+        return (!undoStack.isEmpty());
+    }
+    
     public List<Laureate> resetHome() {
         
         Command newCommand = null;

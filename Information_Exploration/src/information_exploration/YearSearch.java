@@ -39,7 +39,7 @@ public class YearSearch implements Command {
      */
     @Override
     public List<Laureate> execute() {
-
+        System.out.println("Trying Years: " + start + "-" + finish);
         List<Laureate> newList = new ArrayList<>();
         String[] temp;
         int flag = 0;
