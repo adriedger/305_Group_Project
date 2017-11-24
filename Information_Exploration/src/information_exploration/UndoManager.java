@@ -49,4 +49,30 @@ public class UndoManager {
             return newCommand.undo();
         }
     }
+    
+    public boolean canReset() {
+        return (!undoStack.isEmpty());
+    }
+    
+    /**
+     * resetHome() - rolls back all commands until undoStack is empty
+     * 
+     * @return list of laureate objects prior to any commands being executed
+     */
+    public List<Laureate> resetHome() {
+        
+        Command newCommand = null;
+        if (undoStack.isEmpty()) {
+            System.out.println("Nothing to undo");
+            return null;
+        } else {
+            while(!undoStack.isEmpty()) {
+                newCommand = undoStack.pop();
+            }
+            if (newCommand != null) 
+                return newCommand.undo();
+        }
+        return null;
+    }
 }
+
