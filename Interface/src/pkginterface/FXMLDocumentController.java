@@ -57,13 +57,15 @@ public class FXMLDocumentController implements Initializable {
     public void categoryChosen(){
         //gets the category
         String cat = categoryBox.getSelectionModel().getSelectedItem().toString();
-        //System.out.println(category);
+        System.out.println(category);
         category = cat;
         System.out.println(category);
     }
     
     public void getHistory(){
-        //ArrayList<String> array = new ArrayList<>();
+        /*if (category == null){
+            category = "General";
+        }*/
         array.add(category+": "+textSearch);
         history.setText(array.toString());
     }
