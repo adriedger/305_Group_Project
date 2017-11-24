@@ -35,14 +35,16 @@ public class FXMLDocumentController implements Initializable {
      *for the search button it will should use the search text to run the search
      */
     @FXML
-    public void handleButtonSearch(){
+    public void handleButtonSearch() {
         textSearch = searchText.getText();
-        System.out.println("search clicked and the category is: "+ category);
-        System.out.println(textSearch+ " is being searched");
-        getHistory();
-       
+        if (!textSearch.equals("")) {
+            System.out.println("search clicked and the category is: " + category);
+            System.out.println(textSearch + " is being searched");
+            getHistory();
+        }
+
     }
-    
+
     @FXML
     public void handleBackButton(){
         if (!array.isEmpty()){

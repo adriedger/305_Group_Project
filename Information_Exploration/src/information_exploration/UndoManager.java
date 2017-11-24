@@ -49,4 +49,21 @@ public class UndoManager {
             return newCommand.undo();
         }
     }
+    
+    public List<Laureate> resetHome() {
+        
+        Command newCommand = null;
+        if (undoStack.isEmpty()) {
+            System.out.println("Nothing to undo");
+            return null;
+        } else {
+            while(!undoStack.isEmpty()) {
+                newCommand = undoStack.pop();
+            }
+            if (newCommand != null) 
+                return newCommand.undo();
+        }
+        return null;
+    }
 }
+
