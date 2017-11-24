@@ -6,12 +6,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkginterface.FXMLDocumentController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="information_exploration.FXMLDocumentController">
    <children>
       <Button fx:id="search" layoutX="578.0" mnemonicParsing="false" onAction="#handleButtonSearch" prefHeight="31.0" prefWidth="96.0" text="Search" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="609.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ComboBox fx:id="categoryBox" layoutY="1.0" onAction="#categoryChosen" prefWidth="150.0" promptText="Category" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="555.0" AnchorPane.topAnchor="0.0" />
       <TextField fx:id="searchText" layoutX="152.0" layoutY="3.0" prefHeight="33.0" prefWidth="398.0" promptText="SearchHere" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="0.0" />
       <Label fx:id="history" layoutX="14.0" layoutY="46.0" onInputMethodTextChanged="#handleButtonSearch" prefHeight="25.0" prefWidth="705.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="46.0" />
       <Button fx:id="back" layoutX="572.0" minWidth="37.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="31.0" prefWidth="37.0" text="&lt;-" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="572.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="0.0" />
+      <ComboBox fx:id="selectionBox" layoutX="154.0" prefHeight="31.0" prefWidth="398.0" promptText="Available Choices:" visible="false" />
+      <TextField fx:id="startYearText" layoutX="154.0" layoutY="2.0" prefHeight="27.0" prefWidth="186.0" promptText="Start Year:" />
+      <TextField fx:id="endYearText" layoutX="351.0" layoutY="2.0" prefHeight="27.0" prefWidth="186.0" promptText="End Year:" />
    </children>
 </AnchorPane>
