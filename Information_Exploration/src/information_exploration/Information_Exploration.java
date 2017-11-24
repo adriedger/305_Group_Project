@@ -4,11 +4,8 @@
 package information_exploration;
 
 import java.net.MalformedURLException;
-<<<<<<< HEAD
 import javafx.fxml.FXMLLoader;
-=======
 import java.util.ArrayList;
->>>>>>> HelperArray
 import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -39,9 +36,6 @@ public class Information_Exploration extends Application{
         launch(args);
         UndoManager undoManager = new UndoManager();
         ReadNobel process = new ReadNobel();
-<<<<<<< HEAD
-        List<Laureate> laureates = process.read(); 
-=======
         List<Laureate> laureates = process.read();
         
 
@@ -68,8 +62,6 @@ public class Information_Exploration extends Application{
             //l.output();
         
          //= availCountry(laureates);
-        
-      
->>>>>>> HelperArray
+
     }
 }
