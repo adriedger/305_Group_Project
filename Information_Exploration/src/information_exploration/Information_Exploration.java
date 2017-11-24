@@ -22,7 +22,7 @@ public class Information_Exploration extends Application {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Information Exploration");
+        stage.setTitle("Nobel Prize API - Group 6");
         stage.show();
     }
 

@@ -112,7 +112,7 @@ public class FXMLDocumentController implements Initializable {
 
             } else if (category.equals("General")) {
 
-                if (searchText != null) {
+                if (!searchText.equals("")) {
                     textSearch = searchText.getText();
                     Command c = new GeneralSearch(laureates, textSearch);
                     undoManager.addCommand(c);
@@ -123,7 +123,7 @@ public class FXMLDocumentController implements Initializable {
 
             } else {
 
-                if (searchText != null) {
+                if (!searchText.equals("")) {
                     textSearch = searchText.getText();
                     Command c = new CategorySearch(laureates, category, textSearch);
                     undoManager.addCommand(c);
