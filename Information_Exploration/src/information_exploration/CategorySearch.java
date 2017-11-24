@@ -31,7 +31,7 @@ public class CategorySearch implements Command {
     public CategorySearch(List<Laureate> list, String category, String value) {
         this.oldList = list;
         this.category = category.toLowerCase();
-        this.value = value;
+        this.value = value.toLowerCase();
     }
 
     /**
@@ -46,7 +46,7 @@ public class CategorySearch implements Command {
 
         for (Laureate l : oldList) {
             if (l.getEntry().get(category) != null) {
-                if (l.getEntry().get(category).toString().toLowerCase().indexOf(value) != -1) {
+                if (l.getEntry().get(category).toString().toLowerCase().contains(value)) {
                     newList.add(l);
                 }
             }

@@ -32,7 +32,7 @@ public class FXMLDocumentController implements Initializable {
     UndoManager undoManager = new UndoManager();
     ReadNobel process;
     List<Laureate> laureates;
-    
+
     @FXML
     private ComboBox selectionBox;
 
@@ -55,7 +55,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private ListView listMain;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -83,6 +83,7 @@ public class FXMLDocumentController implements Initializable {
     /**
      * for the search button it will should use the search text to run the
      * search
+     *
      * @throws java.lang.Exception
      */
     @FXML
@@ -100,10 +101,11 @@ public class FXMLDocumentController implements Initializable {
                 undoManager.addCommand(c);
                 laureates = c.execute();
                 fillSelectionBox(category);
-                
 
             } else if (category.equals("Year")) {
-
+                if (!yearCheck(startYearText.getText()) ||
+                        !yearCheck(endYearText.getText()))
+                    return;            
                 int start = 1000;
                 int finish = 3000;
                 handleYearSearch(start, finish);
@@ -115,9 +117,10 @@ public class FXMLDocumentController implements Initializable {
                     Command c = new GeneralSearch(laureates, textSearch);
                     undoManager.addCommand(c);
                     laureates = c.execute();
-                } else 
+                } else {
                     return;
-                
+                }
+
             } else {
 
                 if (searchText != null) {
@@ -125,8 +128,9 @@ public class FXMLDocumentController implements Initializable {
                     Command c = new CategorySearch(laureates, category, textSearch);
                     undoManager.addCommand(c);
                     laureates = c.execute();
-                } else
+                } else {
                     return;
+                }
             }
             searchText.clear();
             updateListView();
@@ -135,7 +139,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    public void handleBackButton() throws Exception{
+    public void handleBackButton() throws Exception {
         if (!array.isEmpty()) {
             array.remove((array.size()) - 1);
             history.setText(array.toString());
@@ -144,7 +148,7 @@ public class FXMLDocumentController implements Initializable {
             fillSelectionBox(category);
         }
     }
-    
+
     @FXML
     public void handleResetButton() throws Exception {
         if (undoManager.canReset()) {
@@ -165,7 +169,6 @@ public class FXMLDocumentController implements Initializable {
     public void categoryChosen() throws Exception {
         //gets the category
         String cat = categoryBox.getSelectionModel().getSelectedItem().toString();
-        //System.out.println(category);
         category = cat;
         System.out.println(category);
         searchText.setVisible(false);
@@ -209,7 +212,7 @@ public class FXMLDocumentController implements Initializable {
         }
 
     }
-    
+
     private void updateListView() {
         listMain.setItems(null);
         ObservableList<Laureate> lList = FXCollections.observableList(laureates);
@@ -217,6 +220,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void handleYearSearch(int start, int finish) {
+        
         StringBuilder builder = new StringBuilder();
         if (!startYearText.getText().isEmpty()) {
             start = Integer.parseInt(startYearText.getText());
@@ -231,6 +235,16 @@ public class FXMLDocumentController implements Initializable {
         Command c = new YearSearch(laureates, start, finish);
         undoManager.addCommand(c);
         laureates = c.execute();
+        endYearText.clear();
+        startYearText.clear();
     }
 
+    private boolean yearCheck(String year) {
+        for (char ch : year.toCharArray()) {
+            if (!Character.isDigit(ch)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
