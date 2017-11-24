@@ -16,12 +16,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -34,20 +32,61 @@ public class FXMLDocumentController implements Initializable {
     UndoManager undoManager = new UndoManager();
     ReadNobel process;
     List<Laureate> laureates;
-
-    public Button search;
-    public Button back;
-    public Button reset;
     
     @FXML
-    private AnchorPane rootPane;
+    private ComboBox selectionBox;
+
+    @FXML
+    private Label history;
+
+    @FXML
+    private TextField searchText;
+
+    @FXML
+    private TextField startYearText;
+
+    @FXML
+    private TextField endYearText;
+
+    @FXML
+    private ComboBox categoryBox;
+    ObservableList<String> categoryList
+            = FXCollections.observableArrayList("General", "Name", "Prize", "Gender", "Year", "Country");
+
+    @FXML
+    private ListView listMain;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+            process = new ReadNobel();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            laureates = process.read();
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ObservableList<Laureate> lList = FXCollections.observableList(laureates);
+        listMain.setItems(lList);
+        categoryBox.setItems(categoryList);
+        selectionBox.setVisible(false);
+        startYearText.setVisible(false);
+        endYearText.setVisible(false);
+        searchText.setVisible(false);
+
+    }
 
     /**
      * for the search button it will should use the search text to run the
      * search
+     * @throws java.lang.Exception
      */
     @FXML
-    public void handleButtonSearch() {
+    public void handleButtonSearch() throws Exception {
         if (category == null) {
             //do nothing, no values entered
         } else {
@@ -60,6 +99,8 @@ public class FXMLDocumentController implements Initializable {
                 Command c = new CategorySearch(laureates, category, textSearch);
                 undoManager.addCommand(c);
                 laureates = c.execute();
+                fillSelectionBox(category);
+                
 
             } else if (category.equals("Year")) {
 
@@ -74,8 +115,9 @@ public class FXMLDocumentController implements Initializable {
                     Command c = new GeneralSearch(laureates, textSearch);
                     undoManager.addCommand(c);
                     laureates = c.execute();
-                }
-
+                } else 
+                    return;
+                
             } else {
 
                 if (searchText != null) {
@@ -83,7 +125,8 @@ public class FXMLDocumentController implements Initializable {
                     Command c = new CategorySearch(laureates, category, textSearch);
                     undoManager.addCommand(c);
                     laureates = c.execute();
-                }
+                } else
+                    return;
             }
             searchText.clear();
             updateListView();
@@ -92,22 +135,24 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    public void handleBackButton() {
+    public void handleBackButton() throws Exception{
         if (!array.isEmpty()) {
             array.remove((array.size()) - 1);
             history.setText(array.toString());
             laureates = undoManager.undoCommand();
             updateListView();
+            fillSelectionBox(category);
         }
     }
     
     @FXML
-    public void handleResetButton() {
+    public void handleResetButton() throws Exception {
         if (undoManager.canReset()) {
             laureates = undoManager.resetHome();
             array.clear();
             history.setText(array.toString());
             updateListView();
+            fillSelectionBox(category);
         }
     }
 
@@ -149,12 +194,9 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void getHistory() {
-        //ArrayList<String> array = new ArrayList<>();
         array.add(category + ": " + textSearch);
         history.setText(array.toString());
     }
-    //@FXML
-    //private AutoCompleteTextField autoSearch;
 
     public void fillSelectionBox(String category) throws MalformedURLException, Exception {
 
@@ -168,54 +210,6 @@ public class FXMLDocumentController implements Initializable {
 
     }
     
-    @FXML
-    private ComboBox selectionBox;
-
-    @FXML
-    private Label history;
-
-    @FXML
-    private TextField searchText;
-
-    @FXML
-    private TextField startYearText;
-
-    @FXML
-    private TextField endYearText;
-
-    @FXML
-    private ComboBox categoryBox;
-    ObservableList<String> categoryList
-            = FXCollections.observableArrayList("General", "Name", "Prize", "Gender", "Year", "Country");
-
-    @FXML
-    private ListView listMain;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        try {
-            process = new ReadNobel();
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            laureates = process.read();
-        } catch (Exception ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        ObservableList<Laureate> lList = FXCollections.observableList(laureates);
-        listMain.setItems(lList);
-        categoryBox.setItems(categoryList);
-        selectionBox.setVisible(false);
-        startYearText.setVisible(false);
-        endYearText.setVisible(false);
-        searchText.setVisible(false);
-
-    }
-
     private void updateListView() {
         listMain.setItems(null);
         ObservableList<Laureate> lList = FXCollections.observableList(laureates);

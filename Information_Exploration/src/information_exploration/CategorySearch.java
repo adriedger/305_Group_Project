@@ -46,7 +46,7 @@ public class CategorySearch implements Command {
 
         for (Laureate l : oldList) {
             if (l.getEntry().get(category) != null) {
-                if (l.getEntry().get(category).toString().toLowerCase().contains(value)) {
+                if (l.getEntry().get(category).toString().toLowerCase().indexOf(value) != -1) {
                     newList.add(l);
                 }
             }

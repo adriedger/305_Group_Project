@@ -54,6 +54,11 @@ public class UndoManager {
         return (!undoStack.isEmpty());
     }
     
+    /**
+     * resetHome() - rolls back all commands until undoStack is empty
+     * 
+     * @return list of laureate objects prior to any commands being executed
+     */
     public List<Laureate> resetHome() {
         
         Command newCommand = null;

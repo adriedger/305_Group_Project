@@ -5,7 +5,6 @@ package information_exploration;
 
 import java.net.MalformedURLException;
 import javafx.fxml.FXMLLoader;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Parent;
