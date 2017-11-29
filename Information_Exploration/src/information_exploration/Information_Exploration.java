@@ -33,5 +33,30 @@ public class Information_Exploration extends Application {
     public static void main(String[] args) throws MalformedURLException, Exception {
         launch(args);
 
+//        for(Laureate l : laureates)
+//           l.output();
+        
+        /*
+        Command newC = new GeneralSearch(laureates, "1929");  
+        undoManager.addCommand(newC);
+        laureates = newC.execute();
+        
+        CountryList countries = new CountryList(laureates);
+        System.out.println(countries);
+        PrizeList prizes = new PrizeList(laureates);
+        System.out.println(prizes);
+        
+        //Command newC = new CategorySearch(laureates, "country", "canada");
+        //undoManager.addCommand(newC);
+        //laureates = newC.execute();
+       
+        
+        //for (Laureate l : laureates)
+            //l.output();
+        
+         //= availCountry(laureates);
+*/
+
+
     }
 }

@@ -5,11 +5,15 @@
  */
 package information_exploration;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,11 +21,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import static java.util.Comparator.comparing;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXMLDocumentController - main class to handle the FXMLDocument
@@ -304,6 +314,9 @@ public class FXMLDocumentController implements Initializable {
         endYearText.clear();
         startYearText.clear();
     }
+    
+
+
 
     /**
      * yearCheck - static function to prevent user from searching years with
@@ -320,4 +333,68 @@ public class FXMLDocumentController implements Initializable {
         }
         return true;
     }
+    
+    @FXML
+    public void handleMouseClick(MouseEvent arg0) throws IOException{
+        System.out.println("CLICK DETECTED");
+        Group root = new Group();
+        Scene scene = new Scene(root, 600, 230);
+        Stage stage = new Stage();
+        
+        Laureate current = (Laureate)listMain.getSelectionModel().getSelectedItem();
+        
+        stage.setTitle(current.getEntry().get("name").toString() + " Card");
+        
+        URL imageURL = new URL(current.getEntry().get("photo").toString());
+        try{
+            InputStream in = imageURL.openStream();
+            Image pic = new Image(in);
+            ImageView viewer = new ImageView();
+            viewer.setImage(pic);
+            root.getChildren().add(viewer);
+        } catch (FileNotFoundException ex){}
+        
+        Label name = new Label("Name: " + current.getEntry().get("name").toString());
+        name.setLayoutX(170);
+        name.setLayoutY(0);
+        root.getChildren().add(name);     
+        Label birth = new Label("Birthyear: " + current.getEntry().get("birthyear").toString());
+        birth.setLayoutX(170);
+        birth.setLayoutY(22);
+        root.getChildren().add(birth);
+        Label death = new Label("Deathyear: " + current.getEntry().get("deathyear").toString());
+        death.setLayoutX(170);
+        death.setLayoutY(44);
+        root.getChildren().add(death);
+        Label gender = new Label("Gender: " + current.getEntry().get("gender").toString().substring(0, 1).toUpperCase() + current.getEntry().get("gender").toString().substring(1));
+        gender.setLayoutX(170);
+        gender.setLayoutY(66);
+        root.getChildren().add(gender);
+        Label country = new Label("Nationality: " + current.getEntry().get("country").toString());
+        country.setLayoutX(170);
+        country.setLayoutY(88);
+        root.getChildren().add(country);
+        Label prize = new Label("Nobel Prize: " + current.getEntry().get("year").toString() + " " + current.getEntry().get("prize").toString().substring(0, 1).toUpperCase() + current.getEntry().get("prize").toString().substring(1));
+        prize.setLayoutX(170);
+        prize.setLayoutY(110);
+        root.getChildren().add(prize);
+        Label aff = new Label("Academic Affiliation: " + current.getEntry().get("affiliation").toString());
+        aff.setLayoutX(170);
+        aff.setLayoutY(132);
+        root.getChildren().add(aff);
+        Label bio = new Label("Bio Link: " + current.getEntry().get("biography").toString());
+        bio.setLayoutX(170);
+        bio.setLayoutY(154);
+        root.getChildren().add(bio);
+        Label mot = new Label("Motivation: " + current.getEntry().get("motivation").toString());
+        mot.setLayoutX(170);
+        mot.setLayoutY(176);
+        mot.setMaxWidth(430);
+        mot.setWrapText(true);
+        root.getChildren().add(mot);
+        
+        stage.setScene(scene);
+        stage.show();
+    }   
+
 }
