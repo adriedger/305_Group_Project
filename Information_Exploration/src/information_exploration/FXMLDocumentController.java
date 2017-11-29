@@ -5,6 +5,7 @@
  */
 package information_exploration;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +13,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -60,8 +61,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private ComboBox categoryBox;
-    ObservableList<String> categoryList
-            = FXCollections.observableArrayList("General", "Name", "Prize", "Gender", "Year", "Country");
+    ObservableList<String> categoryList = FXCollections.observableArrayList("General", "Name", "Prize", "Gender", "Year", "Country");
 
     @FXML
     private ListView listMain;
@@ -203,12 +203,12 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void getHistory() {
+    private void getHistory() {
         array.add(category + ": " + textSearch);
         history.setText(array.toString());
     }
 
-    public void fillSelectionBox(String category) throws MalformedURLException, Exception {
+    private void fillSelectionBox(String category) throws MalformedURLException, Exception {
 
         if (category.equals("Country")) {
             CountryList countries = new CountryList(laureates);
@@ -254,14 +254,20 @@ public class FXMLDocumentController implements Initializable {
         
         stage.setTitle(current.getEntry().get("name").toString() + " Card");
         
+        InputStream in = new FileInputStream("nullpic.jpg");
+        Image pic = new Image(in);
+        ImageView viewer = new ImageView();
+        viewer.setImage(pic);        
+        
         URL imageURL = new URL(current.getEntry().get("photo").toString());
+//        System.out.println(imageURL);
         try{
-            InputStream in = imageURL.openStream();
-            Image pic = new Image(in);
-            ImageView viewer = new ImageView();
+            in = imageURL.openStream();
+            pic = new Image(in);
             viewer.setImage(pic);
-            root.getChildren().add(viewer);
+//            root.getChildren().add(viewer);
         } catch (FileNotFoundException ex){}
+        root.getChildren().add(viewer);
         
         Label name = new Label("Name: " + current.getEntry().get("name").toString());
         name.setLayoutX(170);
@@ -271,10 +277,12 @@ public class FXMLDocumentController implements Initializable {
         birth.setLayoutX(170);
         birth.setLayoutY(22);
         root.getChildren().add(birth);
-        Label death = new Label("Deathyear: " + current.getEntry().get("deathyear").toString());
-        death.setLayoutX(170);
-        death.setLayoutY(44);
-        root.getChildren().add(death);
+        if(!current.getEntry().get("deathyear").toString().equals("0000-00-00")){
+            Label death = new Label("Deathyear: " + current.getEntry().get("deathyear").toString());
+            death.setLayoutX(170);
+            death.setLayoutY(44);
+            root.getChildren().add(death);
+        }
         Label gender = new Label("Gender: " + current.getEntry().get("gender").toString().substring(0, 1).toUpperCase() + current.getEntry().get("gender").toString().substring(1));
         gender.setLayoutX(170);
         gender.setLayoutY(66);
@@ -287,14 +295,20 @@ public class FXMLDocumentController implements Initializable {
         prize.setLayoutX(170);
         prize.setLayoutY(110);
         root.getChildren().add(prize);
-        Label aff = new Label("Academic Affiliation: " + current.getEntry().get("affiliation").toString());
-        aff.setLayoutX(170);
-        aff.setLayoutY(132);
-        root.getChildren().add(aff);
-        Label bio = new Label("Bio Link: " + current.getEntry().get("biography").toString());
+        if(!current.getEntry().get("affiliation").toString().equals(", , ")){
+            Label aff = new Label("Affiliation: " + current.getEntry().get("affiliation").toString());
+            aff.setLayoutX(170);
+            aff.setLayoutY(132);
+            root.getChildren().add(aff);
+        }
+        Label bio = new Label("Bio Link: ");
         bio.setLayoutX(170);
         bio.setLayoutY(154);
         root.getChildren().add(bio);
+        Hyperlink link = new Hyperlink(current.getEntry().get("biography").toString());
+        link.setLayoutX(216);
+        link.setLayoutY(151);
+        root.getChildren().add(link);
         Label mot = new Label("Motivation: " + current.getEntry().get("motivation").toString());
         mot.setLayoutX(170);
         mot.setLayoutY(176);

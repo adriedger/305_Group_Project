@@ -40,13 +40,7 @@ public class Laureate {
      */
     @Override
     public String toString() {
-       StringBuilder builder = new StringBuilder();
-       
-       for(Map.Entry<String, String> entry : entries.entrySet()){
-           builder.append(entry.getKey()).append(": ").append(entry.getValue());
-        } 
-       
-       return builder.toString();
+       return entries.get("id") + " " + entries.get("name"); 
     }
 
 }
