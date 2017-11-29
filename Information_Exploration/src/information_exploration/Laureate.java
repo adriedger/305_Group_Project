@@ -3,7 +3,6 @@
  */
 package information_exploration;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,12 +11,17 @@ import java.util.Map;
  * @author adriedger
  */
 public class Laureate {
-    private Map<String, String> entries = new LinkedHashMap<>();
+    private final Map<String, String> entries = new LinkedHashMap<>();
     
     public void addEntry(String key, String data){
         entries.put(key, data);        
     }
 
+    /**
+     * getEntry() - returns the entries linked hash map from a laureate object
+     * 
+     * @return linked hash map of laureate info
+     */
     public Map getEntry() {
         return entries;
     }
@@ -27,6 +31,22 @@ public class Laureate {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
         System.out.println("");
-    }    
+    }
+
+    /**
+     * toString() - converts laureate object to output in string format
+     * 
+     * @return - string containing a laureate object's information
+     */
+    @Override
+    public String toString() {
+       StringBuilder builder = new StringBuilder();
+       
+       for(Map.Entry<String, String> entry : entries.entrySet()){
+           builder.append(entry.getKey()).append(": ").append(entry.getValue());
+        } 
+       
+       return builder.toString();
+    }
 
 }
