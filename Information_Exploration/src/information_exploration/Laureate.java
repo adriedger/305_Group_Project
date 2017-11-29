@@ -41,10 +41,18 @@ public class Laureate {
     @Override
     public String toString() {
        StringBuilder builder = new StringBuilder();
+       builder.append(entries.get("name"));
+       builder.append("\n");
+       builder.append(entries.get("prize"));
+       builder.append(" ");
+       builder.append(entries.get("year"));
+       //builder.append("\n");
        
+       /*
        for(Map.Entry<String, String> entry : entries.entrySet()){
            builder.append(entry.getKey()).append(": ").append(entry.getValue());
         } 
+        */
        
        return builder.toString();
     }

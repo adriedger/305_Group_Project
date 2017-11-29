@@ -5,6 +5,9 @@
  */
 package information_exploration;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.beans.EventHandler;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -54,7 +57,8 @@ public class FXMLDocumentController implements Initializable {
             = FXCollections.observableArrayList("General", "Name", "Prize", "Gender", "Year", "Country");
 
     @FXML
-    private ListView listMain;
+    public ListView listMain;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,7 +81,9 @@ public class FXMLDocumentController implements Initializable {
         startYearText.setVisible(false);
         endYearText.setVisible(false);
         searchText.setVisible(false);
+        //listMain.setOnMouseClicked();
 
+       
     }
 
     /**
@@ -212,13 +218,14 @@ public class FXMLDocumentController implements Initializable {
         }
 
     }
+    
 
     private void updateListView() {
         listMain.setItems(null);
         ObservableList<Laureate> lList = FXCollections.observableList(laureates);
         listMain.setItems(lList);
     }
-
+    
     private void handleYearSearch(int start, int finish) {
         
         StringBuilder builder = new StringBuilder();
@@ -238,7 +245,7 @@ public class FXMLDocumentController implements Initializable {
         endYearText.clear();
         startYearText.clear();
     }
-
+    
     private boolean yearCheck(String year) {
         for (char ch : year.toCharArray()) {
             if (!Character.isDigit(ch)) {
