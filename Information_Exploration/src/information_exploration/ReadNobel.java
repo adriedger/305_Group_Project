@@ -48,7 +48,7 @@ public class ReadNobel {
                 laureate.addEntry("affiliation", parsed.get(17) + ", " + parsed.get(18) + ", " + parsed.get(19));
                 laureate.addEntry("birthyear", parsed.get(3));
                 laureate.addEntry("deathyear", parsed.get(4));
-                laureate.addEntry("biography", "https://nobelprize.org/"+parsed.get(13)+"/laureates/"+parsed.get(12)+"/"+normalizedName+"-bio.html");
+                laureate.addEntry("biography", "https://www.nobelprize.org/nobel_prizes/"+parsed.get(13)+"/laureates/"+parsed.get(12)+"/"+normalizedName+"-bio.html");
                 laureate.addEntry("motivation", parsed.get(16));
 
                 laureates.add(laureate);

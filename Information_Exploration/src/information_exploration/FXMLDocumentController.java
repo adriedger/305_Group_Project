@@ -17,8 +17,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -28,7 +31,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import static java.util.Comparator.comparing;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +41,7 @@ import javafx.stage.Stage;
  *
  * @author tahmi + Stephen Doyle (doyles8@mymacewan.ca)
  */
-public class FXMLDocumentController implements Initializable {
+public class FXMLDocumentController extends Application implements Initializable {
 
     String category, textSearch;
     ArrayList<String> array = new ArrayList<>();
@@ -52,8 +54,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private ComboBox sortByBox;
-    ObservableList<String> sortList = FXCollections.observableArrayList("Name",
-            "Year");
+    ObservableList<String> sortList = FXCollections.observableArrayList("Name", "Year");
 
     @FXML
     private Label history;
@@ -314,9 +315,6 @@ public class FXMLDocumentController implements Initializable {
         endYearText.clear();
         startYearText.clear();
     }
-    
-
-
 
     /**
      * yearCheck - static function to prevent user from searching years with
@@ -336,7 +334,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     public void handleMouseClick(MouseEvent arg0) throws IOException{
-        System.out.println("CLICK DETECTED");
+//        System.out.println("CLICK DETECTED");
         Group root = new Group();
         Scene scene = new Scene(root, 600, 230);
         Stage stage = new Stage();
@@ -351,12 +349,10 @@ public class FXMLDocumentController implements Initializable {
         viewer.setImage(pic);        
         
         URL imageURL = new URL(current.getEntry().get("photo").toString());
-//        System.out.println(imageURL);
         try{
             in = imageURL.openStream();
             pic = new Image(in);
             viewer.setImage(pic);
-//            root.getChildren().add(viewer);
         } catch (FileNotFoundException ex){}
         root.getChildren().add(viewer);
         
@@ -364,42 +360,56 @@ public class FXMLDocumentController implements Initializable {
         name.setLayoutX(170);
         name.setLayoutY(0);
         root.getChildren().add(name);     
+        
         Label birth = new Label("Birthyear: " + current.getEntry().get("birthyear").toString());
         birth.setLayoutX(170);
         birth.setLayoutY(22);
         root.getChildren().add(birth);
+        
         if(!current.getEntry().get("deathyear").toString().equals("0000-00-00")){
             Label death = new Label("Deathyear: " + current.getEntry().get("deathyear").toString());
             death.setLayoutX(170);
             death.setLayoutY(44);
             root.getChildren().add(death);
         }
+        
         Label gender = new Label("Gender: " + current.getEntry().get("gender").toString().substring(0, 1).toUpperCase() + current.getEntry().get("gender").toString().substring(1));
         gender.setLayoutX(170);
         gender.setLayoutY(66);
         root.getChildren().add(gender);
+        
         Label country = new Label("Nationality: " + current.getEntry().get("country").toString());
         country.setLayoutX(170);
         country.setLayoutY(88);
         root.getChildren().add(country);
+        
         Label prize = new Label("Nobel Prize: " + current.getEntry().get("year").toString() + " " + current.getEntry().get("prize").toString().substring(0, 1).toUpperCase() + current.getEntry().get("prize").toString().substring(1));
         prize.setLayoutX(170);
         prize.setLayoutY(110);
         root.getChildren().add(prize);
+        
         if(!current.getEntry().get("affiliation").toString().equals(", , ")){
             Label aff = new Label("Affiliation: " + current.getEntry().get("affiliation").toString());
             aff.setLayoutX(170);
             aff.setLayoutY(132);
             root.getChildren().add(aff);
         }
+        
         Label bio = new Label("Bio Link: ");
         bio.setLayoutX(170);
         bio.setLayoutY(154);
         root.getChildren().add(bio);
         Hyperlink link = new Hyperlink(current.getEntry().get("biography").toString());
+        link.setOnAction(new EventHandler<ActionEvent>() {            
+            @Override
+            public void handle(ActionEvent event) {
+                getHostServices().showDocument(link.getText());  
+            }
+        });
         link.setLayoutX(216);
         link.setLayoutY(151);
         root.getChildren().add(link);
+        
         Label mot = new Label("Motivation: " + current.getEntry().get("motivation").toString());
         mot.setLayoutX(170);
         mot.setLayoutY(176);
@@ -411,4 +421,6 @@ public class FXMLDocumentController implements Initializable {
         stage.show();
     }   
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {}
 }
