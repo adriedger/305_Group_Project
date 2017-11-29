@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkginterface.FXMLDocumentController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="information_exploration.FXMLDocumentController">
    <children>
       <Button fx:id="search" layoutX="578.0" mnemonicParsing="false" onAction="#handleButtonSearch" prefHeight="31.0" prefWidth="96.0" text="Search" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="609.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ComboBox fx:id="categoryBox" layoutY="1.0" onAction="#categoryChosen" prefWidth="150.0" promptText="Category" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="555.0" AnchorPane.topAnchor="0.0" />

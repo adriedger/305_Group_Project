@@ -34,16 +34,14 @@ public class Information_Exploration extends Application{
      */
     public static void main(String[] args) throws MalformedURLException, Exception {
         launch(args);
-        UndoManager undoManager = new UndoManager();
-        ReadNobel process = new ReadNobel();
-        List<Laureate> laureates = process.read();
+
         
 
         //List<String> countries = 
         //for(Laureate l : laureates)
            //l.output();
         
-        
+        /*
         Command newC = new GeneralSearch(laureates, "1929");  
         undoManager.addCommand(newC);
         laureates = newC.execute();
@@ -62,6 +60,7 @@ public class Information_Exploration extends Application{
             //l.output();
         
          //= availCountry(laureates);
+*/
 
     }
 }

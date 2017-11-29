@@ -5,8 +5,10 @@
  */
 package information_exploration;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
  * @author tahmi
  */
 public class FXMLDocumentController implements Initializable {
+
     String category,textSearch;
     ArrayList<String> array = new ArrayList<>();
     
@@ -30,17 +33,27 @@ public class FXMLDocumentController implements Initializable {
     public Button back;
     @FXML
     private AnchorPane rootPane;
+
+    public FXMLDocumentController() throws MalformedURLException, Exception {
+        UndoManager undoManager = new UndoManager();
+        ReadNobel process = new ReadNobel();
+        List<Laureate> laureates = process.read();
+    }
     
     /**
      *for the search button it will should use the search text to run the search
      */
     @FXML
-    public void handleButtonSearch(){
+    public void handleButtonSearch() {
+
         textSearch = searchText.getText();
-        System.out.println("search clicked and the category is: "+ category);
-        System.out.println(textSearch+ " is being searched");
-        getHistory();
-       
+        //does nothing if empty
+        if (!textSearch.equals("")) {
+            System.out.println("search clicked and the category is: " + category);
+            System.out.println(textSearch + " is being searched");
+            getHistory();
+            
+        }
     }
     
     @FXML
