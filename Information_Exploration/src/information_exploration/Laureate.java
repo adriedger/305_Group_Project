@@ -45,7 +45,7 @@ public class Laureate {
        for(Map.Entry<String, String> entry : entries.entrySet()){
            builder.append(entry.getKey()).append(": ").append(entry.getValue());
         } 
-       
+
        return builder.toString();
     }
 
