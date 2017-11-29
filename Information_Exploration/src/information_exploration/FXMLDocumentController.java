@@ -39,7 +39,7 @@ import javafx.stage.Stage;
 /**
  * FXMLDocumentController - main class to handle the FXMLDocument
  *
- * @author tahmi + Stephen Doyle (doyles8@mymacewan.ca)
+ * @author tahmid + Stephen Doyle (doyles8@mymacewan.ca)
  */
 public class FXMLDocumentController extends Application implements Initializable {
 

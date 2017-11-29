@@ -7,18 +7,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="information_exploration.FXMLDocumentController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="information_exploration.FXMLDocumentController">
    <children>
-      <Button fx:id="search" layoutX="578.0" mnemonicParsing="false" onAction="#handleButtonSearch" prefHeight="31.0" prefWidth="96.0" text="Search" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="609.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <ComboBox fx:id="categoryBox" layoutY="1.0" onAction="#categoryChosen" prefWidth="150.0" promptText="Category" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="555.0" AnchorPane.topAnchor="0.0" />
-      <TextField fx:id="searchText" layoutX="152.0" layoutY="3.0" prefHeight="31.0" prefWidth="385.0" promptText="SearchHere" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="search" layoutX="604.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleButtonSearch" prefHeight="31.0" prefWidth="96.0" text="Search" />
+      <ComboBox fx:id="categoryBox" layoutY="1.0" onAction="#categoryChosen" prefHeight="31.0" prefWidth="150.0" promptText="Category" />
+      <TextField fx:id="searchText" layoutX="161.0" layoutY="2.0" prefHeight="31.0" prefWidth="385.0" promptText="SearchHere" />
       <Label fx:id="history" layoutX="5.0" layoutY="46.0" onInputMethodTextChanged="#handleButtonSearch" prefHeight="25.0" prefWidth="599.0" textOverrun="LEADING_ELLIPSIS" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="46.0" />
-      <Button fx:id="back" layoutX="554.0" layoutY="1.0" minWidth="37.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="31.0" prefWidth="37.0" text="&lt;-" AnchorPane.bottomAnchor="525.0" AnchorPane.leftAnchor="554.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="1.0" />
-      <ComboBox fx:id="selectionBox" layoutX="154.0" prefHeight="31.0" prefWidth="398.0" promptText="Available Choices:" visible="false" />
-      <TextField fx:id="startYearText" layoutX="154.0" layoutY="2.0" prefHeight="27.0" prefWidth="186.0" promptText="Start Year:" />
-      <TextField fx:id="endYearText" layoutX="351.0" layoutY="2.0" prefHeight="27.0" prefWidth="186.0" promptText="End Year:" />
+      <Button fx:id="back" layoutX="554.0" layoutY="1.0" minWidth="37.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="31.0" prefWidth="37.0" text="&lt;-" />
+      <ComboBox fx:id="selectionBox" layoutX="160.0" prefHeight="31.0" prefWidth="385.0" promptText="Available Choices:" visible="false" />
+      <TextField fx:id="startYearText" layoutX="161.0" layoutY="2.0" prefHeight="31.0" prefWidth="186.0" promptText="Start Year:" />
+      <TextField fx:id="endYearText" layoutX="360.0" layoutY="2.0" prefHeight="31.0" prefWidth="186.0" promptText="End Year:" />
       <ListView fx:id="listMain" layoutX="6.0" layoutY="74.0" onMouseClicked="#handleMouseClick" prefHeight="448.0" prefWidth="685.0" />
-      <Button fx:id="reset" layoutX="610.0" layoutY="31.0" minWidth="37.0" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="31.0" prefWidth="96.0" text="Reset" />
+      <Button fx:id="reset" layoutX="604.0" layoutY="32.0" minWidth="37.0" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="31.0" prefWidth="96.0" text="Reset" />
       <ComboBox fx:id="sortByBox" layoutX="6.0" layoutY="527.0" onAction="#sortBy" prefHeight="25.0" prefWidth="121.0" promptText="Sort By" />
    </children>
 </AnchorPane>
