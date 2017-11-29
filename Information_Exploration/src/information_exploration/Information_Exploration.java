@@ -5,7 +5,6 @@ package information_exploration;
 
 import java.net.MalformedURLException;
 import javafx.fxml.FXMLLoader;
-import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,7 +14,7 @@ import javafx.stage.Stage;
  *
  * @author adriedger
  */
-public class Information_Exploration extends Application{
+public class Information_Exploration extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -23,7 +22,7 @@ public class Information_Exploration extends Application{
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Information Exploration");
+        stage.setTitle("Nobel Prize API - Group 6");
         stage.show();
     }
 
@@ -33,10 +32,7 @@ public class Information_Exploration extends Application{
      */
     public static void main(String[] args) throws MalformedURLException, Exception {
         launch(args);
-        UndoManager undoManager = new UndoManager();
-        ReadNobel process = new ReadNobel();
-        List<Laureate> laureates = process.read();  
-   
+
 //        for(Laureate l : laureates)
 //           l.output();
         
@@ -60,6 +56,7 @@ public class Information_Exploration extends Application{
         
          //= availCountry(laureates);
 */
+
 
     }
 }

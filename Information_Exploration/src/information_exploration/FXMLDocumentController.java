@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * CMPT 305 - Group Project (Fall 2017)
+ * Group 6
+ *
  */
 package information_exploration;
 
@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,14 +28,16 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import static java.util.Comparator.comparing;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
+ * FXMLDocumentController - main class to handle the FXMLDocument
  *
- * @author tahmi
+ * @author tahmi + Stephen Doyle (doyles8@mymacewan.ca)
  */
 public class FXMLDocumentController implements Initializable {
 
@@ -43,9 +46,14 @@ public class FXMLDocumentController implements Initializable {
     UndoManager undoManager = new UndoManager();
     ReadNobel process;
     List<Laureate> laureates;
-    
+
     @FXML
     private ComboBox selectionBox;
+
+    @FXML
+    private ComboBox sortByBox;
+    ObservableList<String> sortList = FXCollections.observableArrayList("Name",
+            "Year");
 
     @FXML
     private Label history;
@@ -65,7 +73,14 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private ListView listMain;
-    
+
+    /**
+     * initialize - pulls the data from the Nobel prize database, builds the
+     * observable list.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -82,6 +97,7 @@ public class FXMLDocumentController implements Initializable {
 
         ObservableList<Laureate> lList = FXCollections.observableList(laureates);
         listMain.setItems(lList);
+        sortByBox.setItems(sortList);
         categoryBox.setItems(categoryList);
         selectionBox.setVisible(false);
         startYearText.setVisible(false);
@@ -91,8 +107,11 @@ public class FXMLDocumentController implements Initializable {
     }
 
     /**
-     * for the search button it will should use the search text to run the
-     * search
+     * handleButtonSearch - creates a command from the user input + selection,
+     * executes that command, updates the listView, stores the command in the
+     * undoManager and adds to the history bar. Will also prevent the user from
+     * performing unwanted actions (ie: an empty search text)
+     *
      * @throws java.lang.Exception
      */
     @FXML
@@ -110,33 +129,35 @@ public class FXMLDocumentController implements Initializable {
                 undoManager.addCommand(c);
                 laureates = c.execute();
                 fillSelectionBox(category);
-                
 
             } else if (category.equals("Year")) {
-
-                int start = 1000;
-                int finish = 3000;
-                handleYearSearch(start, finish);
+                if (!yearCheck(startYearText.getText())
+                        || !yearCheck(endYearText.getText())) {
+                    return;
+                }
+                handleYearSearch();
 
             } else if (category.equals("General")) {
 
-                if (searchText != null) {
+                if (!searchText.equals("")) {
                     textSearch = searchText.getText();
                     Command c = new GeneralSearch(laureates, textSearch);
                     undoManager.addCommand(c);
                     laureates = c.execute();
-                } else 
+                } else {
                     return;
-                
+                }
+
             } else {
 
-                if (searchText != null) {
+                if (!searchText.equals("")) {
                     textSearch = searchText.getText();
                     Command c = new CategorySearch(laureates, category, textSearch);
                     undoManager.addCommand(c);
                     laureates = c.execute();
-                } else
+                } else {
                     return;
+                }
             }
             searchText.clear();
             updateListView();
@@ -144,8 +165,14 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    /**
+     * handleBackButton - executes the undo of the command at the top of the
+     * undoManagers stack, removes the latest entry in the history bar.
+     *
+     * @throws Exception
+     */
     @FXML
-    public void handleBackButton() throws Exception{
+    public void handleBackButton() throws Exception {
         if (!array.isEmpty()) {
             array.remove((array.size()) - 1);
             history.setText(array.toString());
@@ -154,13 +181,20 @@ public class FXMLDocumentController implements Initializable {
             fillSelectionBox(category);
         }
     }
-    
+
+    /**
+     * handleResetButton - restores the list to its original state (runs all
+     * possible undo commands) and clears the history bar
+     *
+     * @throws Exception
+     */
     @FXML
     public void handleResetButton() throws Exception {
         if (undoManager.canReset()) {
             laureates = undoManager.resetHome();
             array.clear();
             history.setText(array.toString());
+
             updateListView();
             fillSelectionBox(category);
         }
@@ -175,7 +209,6 @@ public class FXMLDocumentController implements Initializable {
     public void categoryChosen() throws Exception {
         //gets the category
         String cat = categoryBox.getSelectionModel().getSelectedItem().toString();
-        //System.out.println(category);
         category = cat;
         System.out.println(category);
         searchText.setVisible(false);
@@ -203,12 +236,39 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    private void getHistory() {
+    /**
+     * sortBy - sorts the listView based on the category selected in sortByBox.
+     */
+    @FXML
+    private void sortBy() {
+        String cat = sortByBox.getSelectionModel().getSelectedItem().toString();
+        System.out.println("Sort By" + cat);
+        if (cat.equals("Name")) {
+            Collections.sort(laureates, new Laureate());
+        }
+        if (cat.equals("Year")) {
+            Collections.sort(laureates);
+        }
+        updateListView();
+    }
+
+    /**
+     * getHistory - updates the history bar at the top of the screen
+     */
+    public void getHistory() {
         array.add(category + ": " + textSearch);
         history.setText(array.toString());
     }
 
-    private void fillSelectionBox(String category) throws MalformedURLException, Exception {
+    /**
+     * fillSelectionBox - Fills the category selection box with all the
+     * available options given a category string.
+     *
+     * @param category - the category to check for available options
+     * @throws MalformedURLException
+     * @throws Exception
+     */
+    public void fillSelectionBox(String category) throws MalformedURLException, Exception {
 
         if (category.equals("Country")) {
             CountryList countries = new CountryList(laureates);
@@ -219,14 +279,24 @@ public class FXMLDocumentController implements Initializable {
         }
 
     }
-    
+
+    /**
+     * updateListView - updates the items in the list view after a command is
+     * performed. Works as an observer
+     */
     private void updateListView() {
         listMain.setItems(null);
         ObservableList<Laureate> lList = FXCollections.observableList(laureates);
         listMain.setItems(lList);
     }
 
-    private void handleYearSearch(int start, int finish) {
+    /**
+     * handleYearSearch - by default the year range is 1000-3000, changes those
+     * values if either textbook contains a valid numerical entry.
+     */
+    private void handleYearSearch() {
+        int start = 1000;
+        int finish = 3000;
         StringBuilder builder = new StringBuilder();
         if (!startYearText.getText().isEmpty()) {
             start = Integer.parseInt(startYearText.getText());
@@ -241,11 +311,32 @@ public class FXMLDocumentController implements Initializable {
         Command c = new YearSearch(laureates, start, finish);
         undoManager.addCommand(c);
         laureates = c.execute();
+        endYearText.clear();
+        startYearText.clear();
+    }
+    
+
+
+
+    /**
+     * yearCheck - static function to prevent user from searching years with
+     * characters not numbers
+     *
+     * @param year - string being checked
+     * @return - true/false if string contains non digits
+     */
+    private boolean yearCheck(String year) {
+        for (char ch : year.toCharArray()) {
+            if (!Character.isDigit(ch)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     @FXML
     public void handleMouseClick(MouseEvent arg0) throws IOException{
-
+        System.out.println("CLICK DETECTED");
         Group root = new Group();
         Scene scene = new Scene(root, 600, 230);
         Stage stage = new Stage();
@@ -319,4 +410,5 @@ public class FXMLDocumentController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }   
+
 }
