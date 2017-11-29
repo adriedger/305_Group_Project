@@ -7,8 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="information_exploration.FXMLDocumentController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="information_exploration.FXMLDocumentController">
     <children>
       <Button fx:id="search" layoutX="601.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleButtonSearch" prefHeight="31.0" prefWidth="96.0" text="Search" AnchorPane.bottomAnchor="524.0" AnchorPane.leftAnchor="601.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="2.0" />
       <ComboBox fx:id="categoryBox" layoutY="1.0" onAction="#categoryChosen" prefWidth="150.0" promptText="Category" AnchorPane.bottomAnchor="526.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="555.0" AnchorPane.topAnchor="0.0" />
@@ -20,5 +19,6 @@
       <TextField fx:id="endYearText" layoutX="351.0" layoutY="2.0" prefHeight="27.0" prefWidth="186.0" promptText="End Year:" />
       <ListView fx:id="listMain" layoutX="6.0" layoutY="74.0" prefHeight="448.0" prefWidth="685.0" />
       <Button fx:id="reset" layoutX="600.0" layoutY="524.0" minWidth="37.0" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="31.0" prefWidth="90.0" text="Reset" />
+      <ComboBox fx:id="sortByBox" layoutX="6.0" layoutY="527.0" onAction="#sortBy" prefHeight="25.0" prefWidth="121.0" promptText="Sort By" />
    </children>
 </AnchorPane>
