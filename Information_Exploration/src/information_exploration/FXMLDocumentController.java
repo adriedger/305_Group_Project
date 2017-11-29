@@ -5,12 +5,6 @@
  */
 package information_exploration;
 
-<<<<<<< HEAD
-=======
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.beans.EventHandler;
->>>>>>> 794f8ed4802b6bceb8cb18cd3a84e9a62c05970b
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -42,7 +36,6 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private ComboBox selectionBox;
-
 
     @FXML
     private Label history;
@@ -146,6 +139,7 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+
     @FXML
     public void handleBackButton() throws Exception {
         if (!array.isEmpty()) {
@@ -163,10 +157,12 @@ public class FXMLDocumentController implements Initializable {
             laureates = undoManager.resetHome();
             array.clear();
             history.setText(array.toString());
+
             updateListView();
             fillSelectionBox(category);
         }
     }
+
 
     /**
      * determines what category is chosen
@@ -220,6 +216,14 @@ public class FXMLDocumentController implements Initializable {
         }
 
     }
+
+
+    private void updateListView() {
+        listMain.setItems(null);
+        ObservableList<Laureate> lList = FXCollections.observableList(laureates);
+        listMain.setItems(lList);
+    }
+    
 
     private void handleYearSearch(int start, int finish) {
         

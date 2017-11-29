@@ -32,6 +32,9 @@ public class Information_Exploration extends Application {
      */
     public static void main(String[] args) throws MalformedURLException, Exception {
         launch(args);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 794f8ed4802b6bceb8cb18cd3a84e9a62c05970b
     }
 }
