@@ -36,12 +36,9 @@ public class Information_Exploration extends Application{
         UndoManager undoManager = new UndoManager();
         ReadNobel process = new ReadNobel();
         List<Laureate> laureates = process.read();  
-
    
-
-        //List<String> countries = 
-        //for(Laureate l : laureates)
-           //l.output();
+//        for(Laureate l : laureates)
+//           l.output();
         
         /*
         Command newC = new GeneralSearch(laureates, "1929");  
