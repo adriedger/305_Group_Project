@@ -34,8 +34,6 @@ public class Information_Exploration extends Application {
     public static void main(String[] args) throws MalformedURLException, Exception {
         launch(args);
 
-//        for(Laureate l : laureates)
-//           l.output();
 
     }
 }

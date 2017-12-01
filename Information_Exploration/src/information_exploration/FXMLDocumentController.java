@@ -131,6 +131,14 @@ public class FXMLDocumentController extends Application implements Initializable
                 laureates = c.execute();
                 fillSelectionBox(category);
 
+            } else if (category.equals("Gender")
+                    && selectionBox.getSelectionModel().getSelectedItem() != null) {
+                textSearch = selectionBox.getSelectionModel().getSelectedItem().toString();
+                Command c = new GenderSearch(laureates, textSearch);
+                undoManager.addCommand(c);
+                laureates = c.execute();
+                fillSelectionBox(category);
+
             } else if (category.equals("Year")) {
                 if (!yearCheck(startYearText.getText())
                         || !yearCheck(endYearText.getText())) {
@@ -226,6 +234,10 @@ public class FXMLDocumentController extends Application implements Initializable
                 fillSelectionBox(category);
                 selectionBox.setVisible(true);
                 break;
+            case "Gender":
+                fillSelectionBox(category);
+                selectionBox.setVisible(true);
+                break;
             case "Year":
                 startYearText.setVisible(true);
                 endYearText.setVisible(true);
@@ -271,13 +283,8 @@ public class FXMLDocumentController extends Application implements Initializable
      */
     public void fillSelectionBox(String category) throws MalformedURLException, Exception {
 
-        if (category.equals("Country")) {
-            CountryList countries = new CountryList(laureates);
-            selectionBox.setItems(FXCollections.observableArrayList(countries.countries));
-        } else if (category.equals("Prize")) {
-            PrizeList prizes = new PrizeList(laureates);
-            selectionBox.setItems(FXCollections.observableArrayList(prizes.prizes));
-        }
+        SelectionUpdater selections = new SelectionUpdater(laureates, category);
+        selectionBox.setItems(FXCollections.observableArrayList(selections.selections));
 
     }
 
@@ -303,7 +310,7 @@ public class FXMLDocumentController extends Application implements Initializable
             start = Integer.parseInt(startYearText.getText());
             builder.append(start);
         }
-        builder.append("-");
+        builder.append("->");
         if (!endYearText.getText().isEmpty()) {
             finish = Integer.parseInt(endYearText.getText());
             builder.append(finish);
@@ -331,96 +338,98 @@ public class FXMLDocumentController extends Application implements Initializable
         }
         return true;
     }
-    
+
     @FXML
-    public void handleMouseClick(MouseEvent arg0) throws IOException{
+    public void handleMouseClick(MouseEvent arg0) throws IOException {
 //        System.out.println("CLICK DETECTED");
         Group root = new Group();
         Scene scene = new Scene(root, 600, 230);
         Stage stage = new Stage();
-        
-        Laureate current = (Laureate)listMain.getSelectionModel().getSelectedItem();
-        
+
+        Laureate current = (Laureate) listMain.getSelectionModel().getSelectedItem();
+
         stage.setTitle(current.getEntry().get("name").toString() + " Card");
-        
+
         InputStream in = new FileInputStream("nullpic.jpg");
         Image pic = new Image(in);
         ImageView viewer = new ImageView();
-        viewer.setImage(pic);        
-        
+        viewer.setImage(pic);
+
         URL imageURL = new URL(current.getEntry().get("photo").toString());
-        try{
+        try {
             in = imageURL.openStream();
             pic = new Image(in);
             viewer.setImage(pic);
-        } catch (FileNotFoundException ex){}
+        } catch (FileNotFoundException ex) {
+        }
         root.getChildren().add(viewer);
-        
+
         Label name = new Label("Name: " + current.getEntry().get("name").toString());
         name.setLayoutX(170);
         name.setLayoutY(0);
-        root.getChildren().add(name);     
-        
+        root.getChildren().add(name);
+
         Label birth = new Label("Birthyear: " + current.getEntry().get("birthyear").toString());
         birth.setLayoutX(170);
         birth.setLayoutY(22);
         root.getChildren().add(birth);
-        
-        if(!current.getEntry().get("deathyear").toString().equals("0000-00-00")){
+
+        if (!current.getEntry().get("deathyear").toString().equals("0000-00-00")) {
             Label death = new Label("Deathyear: " + current.getEntry().get("deathyear").toString());
             death.setLayoutX(170);
             death.setLayoutY(44);
             root.getChildren().add(death);
         }
-        
+
         Label gender = new Label("Gender: " + current.getEntry().get("gender").toString().substring(0, 1).toUpperCase() + current.getEntry().get("gender").toString().substring(1));
         gender.setLayoutX(170);
         gender.setLayoutY(66);
         root.getChildren().add(gender);
-        
+
         Label country = new Label("Nationality: " + current.getEntry().get("country").toString());
         country.setLayoutX(170);
         country.setLayoutY(88);
         root.getChildren().add(country);
-        
+
         Label prize = new Label("Nobel Prize: " + current.getEntry().get("year").toString() + " " + current.getEntry().get("prize").toString().substring(0, 1).toUpperCase() + current.getEntry().get("prize").toString().substring(1));
         prize.setLayoutX(170);
         prize.setLayoutY(110);
         root.getChildren().add(prize);
-        
-        if(!current.getEntry().get("affiliation").toString().equals(", , ")){
+
+        if (!current.getEntry().get("affiliation").toString().equals(", , ")) {
             Label aff = new Label("Affiliation: " + current.getEntry().get("affiliation").toString());
             aff.setLayoutX(170);
             aff.setLayoutY(132);
             root.getChildren().add(aff);
         }
-        
+
         Label bio = new Label("Bio Link: ");
         bio.setLayoutX(170);
         bio.setLayoutY(154);
         root.getChildren().add(bio);
         Hyperlink link = new Hyperlink(current.getEntry().get("biography").toString());
-        link.setOnAction(new EventHandler<ActionEvent>() {            
+        link.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                getHostServices().showDocument(link.getText());  
+                getHostServices().showDocument(link.getText());
             }
         });
         link.setLayoutX(216);
         link.setLayoutY(151);
         root.getChildren().add(link);
-        
+
         Label mot = new Label("Motivation: " + current.getEntry().get("motivation").toString());
         mot.setLayoutX(170);
         mot.setLayoutY(176);
         mot.setMaxWidth(430);
         mot.setWrapText(true);
         root.getChildren().add(mot);
-        
+
         stage.setScene(scene);
         stage.show();
-    }   
+    }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {}
+    public void start(Stage primaryStage) throws Exception {
+    }
 }

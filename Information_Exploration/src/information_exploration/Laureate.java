@@ -3,6 +3,8 @@
  */
 package information_exploration;
 
+import static java.lang.Character.toUpperCase;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,13 +45,17 @@ public class Laureate implements Comparable<Laureate>, Comparator<Laureate> {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
+        
 
         builder.append(entries.get("name"));
         builder.append("\n");
-        builder.append(entries.get("prize"));
+        char pcat[] = entries.get("prize").toCharArray();
+        pcat[0] = toUpperCase(pcat[0]);
+        String pcats = new String(pcat);
+        builder.append(pcats);
         builder.append(" ");
         builder.append(entries.get("year"));
-        //builder.append("\n");
+                
 
         /*
        for(Map.Entry<String, String> entry : entries.entrySet()){
