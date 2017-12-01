@@ -416,6 +416,7 @@ public class FXMLDocumentController extends Application implements Initializable
         });
         link.setLayoutX(216);
         link.setLayoutY(151);
+        link.setMaxWidth(380);
         root.getChildren().add(link);
 
         Label mot = new Label("Motivation: " + current.getEntry().get("motivation").toString());
