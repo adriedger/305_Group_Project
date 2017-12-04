@@ -303,18 +303,36 @@ public class FXMLDocumentController extends Application implements Initializable
      * values if either textbook contains a valid numerical entry.
      */
     private void handleYearSearch() {
-        int start = 1000;
-        int finish = 3000;
+        int start = 0;
+        int finish = 0;
         StringBuilder builder = new StringBuilder();
         if (!startYearText.getText().isEmpty()) {
             start = Integer.parseInt(startYearText.getText());
-            builder.append(start);
+        } else if (startYearText.getText().isEmpty()) {
+            if (!endYearText.getText().isEmpty()) {
+                start = Integer.parseInt(endYearText.getText());
+            }
         }
-        builder.append("->");
+        
         if (!endYearText.getText().isEmpty()) {
             finish = Integer.parseInt(endYearText.getText());
-            builder.append(finish);
+        } else if (endYearText.getText().isEmpty()) {
+            if (!startYearText.getText().isEmpty()) {
+                finish = Integer.parseInt(startYearText.getText());
+            }
         }
+        System.out.println(start);
+        System.out.println(finish);
+        if (start > finish) {
+            int temp = start;
+            start = finish;
+            finish = temp;
+        }
+        
+        builder.append(start);
+        builder.append("->");
+        builder.append(finish);            
+        
         textSearch = builder.toString();
         Command c = new YearSearch(laureates, start, finish);
         undoManager.addCommand(c);
